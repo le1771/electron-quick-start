@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-mac": "electron-builder build --mac --publish never"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -16,7 +17,87 @@
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
+  "build": {
+    "productName": "Electron Quick Start",
+    "appId": "com.electron.quickstart",
+    "files": [
+      "main.js",
+      "index.html",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "icons/icon.png",
+      "entitlements": "build/entitlements.mac.plist",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": true,
+      "target": [
+        "pkg",
+        "dmg",
+        "zip",
+        "mas"
+      ]
+    },
+    "mas": {
+      "type": "distribution",
+      "category": "public.app-category.productivity",
+      "icon": "icons/icon.png",
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": true,
+      "asarUnpack": [
+        "*.node"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "rfc3161TimeStampServer": "http://tsa.startssl.com/rfc3161",
+      "publisherName": "Electron Quick Start"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "icons/icon.png"
+    },
+    "deb": {
+      "fpm": [
+        "--architecture",
+        "armhf"
+      ]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  },
   "devDependencies": {
-    "electron": "^8.2.3"
+    "electron": "^8.2.3",
+    "electron-builder": "22.5.1"
   }
 }
